@@ -5,10 +5,10 @@ import pandas as pd
 from datetime import datetime
 import os
 
-api_id = '22517422'    
-api_hash = '917a6cc7c2180bb526f1cb701b436e95'  
-phone_number = '+79819129854'  
-session_name = '+79819129854.session'  
+api_id = 'api_id'    
+api_hash = 'api_hash'  
+phone_number = 'phone_number'  
+session_name = 'session'  
 channel_id = 'sportsru' 
 
 output_directory = 'telegram_data'
