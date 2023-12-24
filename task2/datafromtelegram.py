@@ -14,21 +14,19 @@ api_hash = data['api_hash']
 phone_number = data['phone_number'] 
 session_name = data['session_name']
 
-# 要监控的Telegram频道ID
-channel_id = 'sportsru'  # 频道ID
+channel_id = 'sportsru'  
 
-# 文件保存路径
 output_directory = 'telegram_data'
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
-# 定义异步函数来获取消息
-async def get_messages(client):
-    # 获取频道实体
-    channel = await client.get_entity(channel_id)
-    messages = await client.get_messages(channel, limit=100)  # 可以调整获取的消息数量
 
-    # 提取消息数据
+async def get_messages(client):
+
+    channel = await client.get_entity(channel_id)
+    messages = await client.get_messages(channel, limit=100)  
+
+
     data = []
     for message in messages:
         data.append({
@@ -38,15 +36,15 @@ async def get_messages(client):
             'media': message.media is not None
         })
 
-    # 转换为DataFrame
+
     df = pd.DataFrame(data)
-    # 保存为Parquet文件
+
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     filename = f'{output_directory}/messages_{timestamp}.parquet'
     df.to_parquet(filename, index=False)
     print(f'Saved data to {filename}')
 
-# 定时获取和保存消息
+
 async def periodic_fetch(client, interval_seconds):
     while True:
         await get_messages(client)
